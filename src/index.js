@@ -6,30 +6,26 @@ import axios from "axios";
 const app = express();
 const PORT = 8080;
 const KEY = "05283ec2-5775-4e67-a93a-dc9fdccdbf9d";
-//const ENVTYPE = "dev";
-//opennode.setCredentials(KEY, ENVTYPE);
+opennode.setCredentials(KEY);
 
-const options = {
-	method: 'POST',
-	url: 'https://api.opennode.com/v1/charges',
-	headers: {
-	accept: 'application/json',
-	'Content-Type': 'application/json',
-	Authorization: KEY
-	},
-	data: {amount: 4}
-};
+const charge = {
+	"amount":"4.13",
+	"description":"Test",
+	"currency":"USD",
+	"customer_email":"a01639784@tec.mx",
+	"notif_email":"a01639784@tec.mx",
+	"customer_name":"Chente",
+	"order_id":"21",
+	"ttl":10
+  };
 
 try{
-	const response = await axios.request(options);
-	console.log(response.data);
+	const res = await opennode.createCharge(charge);
+	console.log(res);
 }catch(error){
 	console.log(error);
 }
 
-app.get('/', async(req, res) => {
-});
-  
 app.listen(PORT, () => {
 	console.log(`[⚡server⚡]: Listening on port http://localhost:${PORT}`);
 });
