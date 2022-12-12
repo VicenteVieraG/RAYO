@@ -1,6 +1,5 @@
 import express from "express";
 import opennode from "opennode";
-import axios from "axios";
 
 //Server Main SetUp
 const app = express();
@@ -19,13 +18,13 @@ const charge = {
 	"ttl":10
   };
 
-try{
-	const res = await opennode.createCharge(charge);
-	console.log(res);
-}catch(error){
-	console.log(error);
-}
-
-app.listen(PORT, () => {
-	console.log(`[⚡server⚡]: Listening on port http://localhost:${PORT}`);
+app.listen(PORT, async() => {
+	try{
+		const res = await opennode.createCharge(charge);
+		
+		console.log(`[⚡server⚡]: Listening on port: http://localhost:${PORT}`);
+		console.log(`[⚡server⚡]: penNode's native checkout endpoint: https://checkout.opennode.com/${res.id}`);
+	}catch(error){
+		console.log(error);
+	}
 });
